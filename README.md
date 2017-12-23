@@ -1,8 +1,5 @@
-# minixi
-
-> zvale
-
-> base on 'iview'、'vue'、'node' and 'mongodb'
+# zvale
+> A product base on iview、vue、node and mongodb
 
 ## Build Setup
 
