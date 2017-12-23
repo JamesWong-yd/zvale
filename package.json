@@ -1,7 +1,7 @@
 {
-  "name": "iview-admin",
-  "version": "1.2.3",
-  "description": "a management bases on iview",
+  "name": "zvale-admin",
+  "version": "1.0.0",
+  "description": "zvale bases on iview",
   "main": "index.js",
   "scripts": {
     "init": "webpack --progress --config build/webpack.dev.config.js",
@@ -14,7 +14,7 @@
     "type": "git",
     "url": "https://github.com/iview/iview-admin.git"
   },
-  "author": "Lison<zhigang.li@tendcloud.com>",
+  "author": "James Wong<380928526@qq.com>",
   "license": "MIT",
   "dependencies": {
     "area-data": "^1.0.0",

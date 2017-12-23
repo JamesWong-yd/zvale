@@ -1,16 +1,15 @@
 import axios from 'axios';
 import env from '../../build/env';
-import semver from 'semver';
-import packjson from '../../package.json';
 
 let util = {
 
 };
 util.title = function (title) {
-    title = title || 'iView admin';
+    title = title || 'Zvale';
     window.document.title = title;
 };
 
+// 设置基础后台请求url
 const ajaxUrl = env === 'development'
     ? 'http://127.0.0.1:8888'
     : env === 'production'
@@ -249,21 +248,6 @@ util.fullscreenEvent = function (vm) {
     // 权限菜单过滤相关
     vm.$store.commit('updateMenulist');
     // 全屏相关
-};
-
-util.checkUpdate = function (vm) {
-    axios.get('https://api.github.com/repos/iview/iview-admin/releases/latest').then(res => {
-        let version = res.data.tag_name;
-        vm.$Notice.config({
-            duration: 0
-        });
-        if (semver.lt(packjson.version, version)) {
-            vm.$Notice.info({
-                title: 'iview-admin更新啦',
-                desc: '<p>iView-admin更新到了' + version + '了，去看看有哪些变化吧</p><a style="font-size:13px;" href="https://github.com/iview/iview-admin/releases" target="_blank">前往github查看</a>'
-            });
-        }
-    });
 };
 
 export default util;
