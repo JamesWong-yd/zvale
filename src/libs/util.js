@@ -5,7 +5,7 @@ let util = {
 
 };
 util.title = function (title) {
-    title = title || 'Zvale';
+    title = title || 'Zvale后台管理';
     window.document.title = title;
 };
 

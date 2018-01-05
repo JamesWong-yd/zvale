@@ -37,9 +37,6 @@ module.exports = merge(webpackBaseConfig, {
         new CopyWebpackPlugin([
             {
                 from: 'src/views/main-components/theme-switch/theme'
-            },
-            {
-                from: 'src/views/my-components/text-editor/tinymce'
             }
         ], {
             ignore: [
