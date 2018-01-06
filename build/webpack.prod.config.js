@@ -57,7 +57,7 @@ module.exports = merge(webpackBaseConfig, {
         // }),
         new CopyWebpackPlugin([
             {
-                from: 'td_icon.ico'
+                from: 'zvale.ico'
             },
             {
                 from: 'src/styles/fonts',
@@ -71,7 +71,7 @@ module.exports = merge(webpackBaseConfig, {
         }),
         new HtmlWebpackPlugin({
             title: 'iView admin v' + package.version,
-            favicon: './td_icon.ico',
+            favicon: './zvale.ico',
             filename: '../index.html',
             template: './src/template/index.ejs',
             inject: false
