@@ -43,5 +43,22 @@ module.exports = merge(webpackBaseConfig, {
                 'text-editor.vue'
             ]
         })
-    ]
+    ],
+    devServer: {
+        historyApiFallback: true,
+        hot: true,
+        inline: true,
+        port: 8082,
+        stats: { colors: true },
+        proxy: {
+            //匹配代理的url
+            '/api': {
+            // 目标服务器地址
+              target: 'http://127.0.0.1:8082',
+              //路径重写
+              pathRewrite: {'^/api' : '/api'},
+              changeOrigin: true
+            }
+         }
+    }
 });
