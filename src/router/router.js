@@ -25,7 +25,7 @@ export const page403 = {
         title: '403-权限不足'
     },
     name: 'error-403',
-    component: resolve => { require(['@//views/error-page/403.vue'], resolve); }
+    component: resolve => { require(['@/views/error-page/403.vue'], resolve); }
 };
 
 export const page500 = {
@@ -50,7 +50,7 @@ export const otherRouter = {
     redirect: '/home',
     component: Main,
     children: [
-        { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: resolve => { require(['@/views/home/home.vue'], resolve); } },
+        { path: 'home', title: { i18n: 'home' }, name: 'home_index', component: resolve => { require(['@/views/home/home.vue'], resolve); } },
         { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: resolve => { require(['@/views/own-space/own-space.vue'], resolve); } },
         { path: 'message', title: '消息中心', name: 'message_index', component: resolve => { require(['@/views/message/message.vue'], resolve); } }
     ]
@@ -65,7 +65,7 @@ export const appRouter = [
         title: '权限管理',
         component: Main,
         children: [
-            { path: 'index', title: '权限管理', name: 'access_index', component: resolve => { require(['@/views/access/access.vue'], resolve); } }
+            { path: '/access', title: '权限管理', name: 'access_index', component: resolve => { require(['@/views/access/access.vue'], resolve); } }
         ]
     },
     {
@@ -76,7 +76,29 @@ export const appRouter = [
         access: 0,
         component: Main,
         children: [
-            { path: 'index', title: '权限测试页', name: 'accesstest_index', access: 0, component: resolve => { require(['@/views/access/access-test.vue'], resolve); } }
+            { path: '/accesstest', title: '权限测试页', name: 'accesstest_index', access: 0, component: resolve => { require(['@/views/access/access-test.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/model',
+        icon: 'android-apps',
+        title: '版块管理',
+        name: 'model',
+        access: 0,
+        component: Main,
+        children: [
+            { path: '/model', title: '版块管理', name: 'model_index', access: 0, component: resolve => { require(['@/views/model/model.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/account',
+        icon: 'person-stalker',
+        title: '用户管理',
+        name: 'account',
+        access: 0,
+        component: Main,
+        children: [
+            { path: '/account', title: '用户管理', name: 'account_index', access: 0, component: resolve => { require(['@/views/account/account.vue'], resolve); } }
         ]
     }
 ];

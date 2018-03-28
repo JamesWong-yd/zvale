@@ -11,10 +11,10 @@ util.title = function (title) {
 
 // 设置基础后台请求url
 const ajaxUrl = env === 'development'
-    ? 'http://127.0.0.1:8888'
+    ? 'http://localhost:3000'
     : env === 'production'
-        ? 'https://www.url.com'
-        : 'https://debug.url.com';
+        ? 'https://www.url.com/'
+        : 'https://debug.url.com/';
 
 util.ajax = axios.create({
     baseURL: ajaxUrl,

@@ -7,9 +7,9 @@ const webpackBaseConfig = require('./webpack.base.config.js');
 const fs = require('fs');
 const package = require('../package.json');
 
-fs.open('./build/env.js', 'w', function(err, fd) {
+fs.open('./build/env.js', 'w', function (err, fd) {
     const buf = 'export default "development";';
-    fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
+    fs.write(fd, buf, 0, buf.length, 0, function (err, written, buffer) { });
 });
 
 module.exports = merge(webpackBaseConfig, {
@@ -39,26 +39,16 @@ module.exports = merge(webpackBaseConfig, {
                 from: 'src/views/main-components/theme-switch/theme'
             }
         ], {
-            ignore: [
-                'text-editor.vue'
-            ]
-        })
+                ignore: [
+                    'text-editor.vue'
+                ]
+            })
     ],
     devServer: {
         historyApiFallback: true,
         hot: true,
         inline: true,
-        port: 8082,
+        port: 8093,
         stats: { colors: true },
-        proxy: {
-            //匹配代理的url
-            '/api': {
-            // 目标服务器地址
-              target: 'http://127.0.0.1:8082',
-              //路径重写
-              pathRewrite: {'^/api' : '/api'},
-              changeOrigin: true
-            }
-         }
     }
 });
