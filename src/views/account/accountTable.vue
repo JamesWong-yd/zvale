@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Table :loading="loading" border size="small" :columns="columns" highlight-row @on-current-change="rowData" :data="data1"></Table>
-    <div style="margin: 10px;overflow: hidden">
+    <Table :loading="loading" border size="small" :columns="columns" highlight-row @on-current-change="rowData" :data="listData"></Table>
+    <div style="margin: 5px;padding:5px;overflow: hidden">
       <div style="float: right;">
         <Page :total="total" size="small" show-elevator show-sizer @on-change="pageChangeRender" @on-page-size-change="limitChangeRender"></Page>
       </div>
@@ -10,56 +10,68 @@
 </template>
 
 <script>
-import util from '@/libs/util'
+import account from '@/api/account'
 
 export default {
   props: ['tableData'],
   data() {
     return {
       loading: true,
+      params: {
+        search: '',
+        limit: 10,
+        page: 1
+      },
       total: 0,
+      search: '',
       columns: [
         {
-          title: 'Name',
+          title: '账号',
           key: 'firstName',
           align: 'center'
         },
         {
-          title: 'Age',
+          title: '姓名',
           key: 'lastName',
           align: 'center'
         },
         {
-          title: 'Address',
+          title: '状态',
           key: 'email',
           align: 'center'
         }
       ],
-      data1: []
+      listData: []
     }
   },
   created() {
-    util
-      .ajax({
-        method: 'get',
-        url: '/users',
-        params: {page:1,limit:10}
-      })
-      .then(res => {
-        this.data1 = res.data.data
-        this.total = res.data.count
-        this.loading = false
-      })
+    this._getAccountList(this, this.params)
   },
   methods: {
+    _getAccountList: async (self, params) => {
+      const res = await account.getAccountList({
+        search: params.search || '',
+        limit: params.limit || 10,
+        page: params.page || 1
+      })
+      self.listData = res.data
+      self.total = res.count
+      self.loading = false
+    },
     pageChangeRender: function(page) {
-      console.log(page)
+      this.params.page = page
+      this._getAccountList(this, this.params)
     },
     limitChangeRender: function(limit) {
-      console.log(limit)
+      this.params.limit = limit
+      this._getAccountList(this, this.params)
+    },
+    reloadRender: function (){
+      this.search = '';
+      this._getAccountList(this, this.params)
     },
     rowData: function(res) {
-      console.log(res)
+      this.$emit('selectData',res)
     }
   }
 }
