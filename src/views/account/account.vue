@@ -2,10 +2,10 @@
   <div>
     <Row :gutter="16">
       <Col span="16">
-        <Card :bordered="false">
-          <p slot="title">用户列表</p>
-          <account-table ref="accountTable" @selectData="selectDataId"></account-table>
-        </Card>
+      <Card :bordered="false">
+        <p slot="title">用户列表</p>
+        <account-table ref="accountTable" @selectData="selectDataId"></account-table>
+      </Card>
       </Col>
       <Col span="8">
       <Card :bordered="false">
@@ -25,8 +25,8 @@
           </FormItem>
           <FormItem label="状态" prop="state">
             <RadioGroup v-model="formValidate.state">
-              <Radio label="1">有效</Radio>
-              <Radio label="0">无效</Radio>
+              <Radio label="1">生效</Radio>
+              <Radio label="0">失效</Radio>
             </RadioGroup>
           </FormItem>
           <FormItem label="电话" prop="phone">
@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import Account from '@/api/account'
+
 export default {
   data() {
     return {
@@ -87,11 +89,18 @@ export default {
     }
   },
   methods: {
+    _addAccount: async function(req) {
+      const res = await Account.addAccount(req)
+      if(res.status){
+        this.accountTableReload()
+        this.$Message.success('创建成功')
+        // this.handleReset('formValidate')
+      }
+    },
     handleSubmit(name) {
-      this.accountTableReload()
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success('创建成功！')
+          this._addAccount(this.formValidate)
         } else {
           this.$Message.error('请正确填写信息')
         }
