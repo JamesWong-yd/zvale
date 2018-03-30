@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import account from '@/api/account'
+import Account from '@/api/account'
 
 export default {
   data() {
@@ -53,11 +53,17 @@ export default {
           align: 'center'
         },
         {
+          title: '手机',
+          key: 'phone',
+          align: 'center'
+        },
+        {
           title: '状态',
           key: 'state',
           align: 'center',
           render: (h, params) => {
             const text = params.row.state === 1 ? '生效' : '失效'
+            let self = this
             return h('div', [
               h(
                 'i-switch',
@@ -65,15 +71,18 @@ export default {
                   props: {
                     type: 'primary',
                     size: 'large',
-                    value: params.row.state === 1
+                    value: params.row.state === 1,
+                    disabled: params.row.account === 'admin'
                   },
                   style: {
                     marginRight: '5px'
                   },
                   on: {
-                    'on-change': value => {
-                      // this.switch(params.index)
-                      params.row.state = params.row.state === 1 ? 0 : 1
+                    'on-change': (value) => {
+                      event.stopPropagation()
+                      self.switchState(params.row, function(res) {
+                        params.row.state = res.state
+                      })
                     }
                   }
                 },
@@ -94,7 +103,7 @@ export default {
   },
   methods: {
     _getAccountList: async (self, params) => {
-      const res = await account.getAccountList(params)
+      const res = await Account.getAccountList(params)
       self.listData = res.data
       self.total = res.count
       self.loading = false
@@ -121,6 +130,16 @@ export default {
     searchData: function() {
       this.loading = true
       this._getAccountList(this, this.params)
+    },
+    switchState: async function(req, callback) {
+      let state = req.state === 1 ? 0 : 1
+      const res = await Account.accountState({ id: req._id, state: state })
+      if (res.status) {
+        this.$Message.success(res.msg)
+        callback(res.data)
+      } else {
+        this.$Message.error(res.msg)
+      }
     }
   }
 }
