@@ -9,7 +9,7 @@
       </Col>
       <Col span="8">
       <Card :bordered="false">
-        <p slot="title">用户详情</p>
+        <p slot="title">管理用户</p>
         <Form ref="formValidate" :model="formValidate" :rules="handleButton==='1' ? ruleValidate : editRuleValidate" :label-width="80">
           <FormItem>
             <RadioGroup v-model="handleButton" type="button">
@@ -58,6 +58,7 @@
 import Account from '@/api/account'
 
 export default {
+  name: "account_index",
   data() {
     const validateAccount = async (rule, value, callback) => {
       if (!value) return callback(new Error('账号不能为空'))
@@ -90,6 +91,7 @@ export default {
       handleButton: '1',
       editId: '',
       editAccount: '',
+      editClearFlag: false,
       formspinShow: false,
       formValidate: {
         account: '',
@@ -169,7 +171,7 @@ export default {
       this.formspinShow = false
       if (res.status) this.submitInit(res.msg)
     },
-    submitInit (msg) {
+    submitInit(msg) {
       this.$Message.success(msg)
       this.$refs.accountTable.reloadRender()
       this.handleReset('formValidate')
@@ -186,7 +188,6 @@ export default {
     handleEdit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          // 传输用户信息
           let edata = this.formValidate
           edata.accountId = this.editId
           if (!this.formValidate.pwd) {
@@ -204,6 +205,12 @@ export default {
       this.handleButton = '1'
       this.editAccount = ''
       this.$refs[name].resetFields()
+      if (this.editClearFlag) {
+        let self = this
+        this.$nextTick(function() {
+          self.$refs[name].resetFields()
+        })
+      }
     },
     selectDataId: async function(res) {
       const editDate = await Account.getAccount(res._id)
@@ -212,6 +219,7 @@ export default {
         this.editAccount = res.account
         this.handleButton = '0'
         this.formValidate = editDate.data
+        this.editClearFlag = true
       } else {
         this.$Message.error('获取用户信息失败')
       }

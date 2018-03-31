@@ -23,6 +23,7 @@
                     <p slot="title">
                         <Icon type="android-contacts"></Icon>
                         不同权限用户的不同菜单
+                        <input type="text">
                     </p>
                     <div class="access-user-con access-change-access-con">
                         <Col span="8">

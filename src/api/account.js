@@ -25,6 +25,7 @@ module.exports = {
             name: req.name,
             t: new Date() * 1
         };
+        if (req.state) _req.state = req.state
         const res = await axios.ajax({
             method: 'get',
             url: '/accounts/list',
