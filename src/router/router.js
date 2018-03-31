@@ -91,6 +91,17 @@ export const appRouter = [
         ]
     },
     {
+        path: '/msgManage',
+        icon: 'email',
+        title: '消息管理',
+        name: 'msgManage',
+        access: 0,
+        component: Main,
+        children: [
+            { path: '/msgManage', title: '消息管理', name: 'msgManage_index', access: 0, component: resolve => { require(['@/views/message/messageM.vue'], resolve); } }
+        ]
+    },
+    {
         path: '/account',
         icon: 'person-stalker',
         title: '用户管理',
