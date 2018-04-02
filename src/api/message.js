@@ -31,5 +31,19 @@ module.exports = {
             data: req
         })
         return res.data
+    },
+
+    // 删除信息
+    removeMessage: async req => {
+        let _req = {
+            id: req.id,
+            state: 0
+        }
+        const res = await axios.ajax({
+            method: 'post',
+            url: '/messages/remove',
+            data: _req
+        })
+        return res.data
     }
 };

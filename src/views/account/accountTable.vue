@@ -59,7 +59,7 @@ export default {
         },
         {
           title: '状态',
-          key: 'state',
+          width: '150px',
           align: 'center',
           render: (h, params) => {
             const text = params.row.state === 1 ? '生效' : '失效'

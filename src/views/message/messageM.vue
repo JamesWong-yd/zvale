@@ -4,7 +4,7 @@
       <Col span="16">
       <Card :bordered="false">
         <p slot="title">消息管理列表</p>
-        <!-- <account-table ref="msgMTable" @selectData="selectDataId"></account-table> -->
+        <message-table ref="messageTable" @selectData="selectDataId"></message-table>
       </Card>
       </Col>
       <Col span="8">
@@ -43,7 +43,7 @@
             </Checkbox>
           </FormItem>
           <FormItem>
-            <Button :disabled="handleButton==='0'" type="primary" @click="handleSubmit('formValidate')">创建</Button>
+            <Button :disabled="handleButton==='0'" type="primary" @click="handleSubmit('formValidate')">发送</Button>
             <Button type="ghost" @click="handleReset('formValidate')">清空</Button>
           </FormItem>
         </Form>
@@ -94,6 +94,7 @@ export default {
       const res = await Message.addMessage(req)
       if(res.status){
         this.$Message.success(res.msg)
+        this.$refs.messageTable.reloadRender()
         this.handleReset('formValidate')
       }
     },
@@ -112,7 +113,6 @@ export default {
       this.$refs[name].validate(valid => {
         if (valid) {
           this._AddMessage(this.formValidate)
-          console.log(this.formValidate.receiver)
         } else {
           this.$Message.error('请正确填写信息')
         }
@@ -122,6 +122,14 @@ export default {
       this.msgLook = false
       this.$refs[name].resetFields()
     },
+    selectDataId: async function(res) {
+      console.log(res)
+    }
+  },
+  components: {
+    messageTable: resolve => {
+      require(['@/views/message/component/messageTable'], resolve)
+    }
   }
 }
 </script>
