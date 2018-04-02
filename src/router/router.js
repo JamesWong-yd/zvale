@@ -73,10 +73,10 @@ export const appRouter = [
         icon: 'lock-combination',
         title: '权限测试页',
         name: 'accesstest',
-        access: 0,
+        access: 1,
         component: Main,
         children: [
-            { path: '/accesstest', title: '权限测试页', name: 'accesstest_index', access: 0, component: resolve => { require(['@/views/access/access-test.vue'], resolve); } }
+            { path: '/accesstest', title: '权限测试页', name: 'accesstest_index', access: 1, component: resolve => { require(['@/views/access/access-test.vue'], resolve); } }
         ]
     },
     {
@@ -84,10 +84,10 @@ export const appRouter = [
         icon: 'android-apps',
         title: '版块管理',
         name: 'model',
-        access: 0,
+        access: 1,
         component: Main,
         children: [
-            { path: '/model', title: '版块管理', name: 'model_index', access: 0, component: resolve => { require(['@/views/model/model.vue'], resolve); } }
+            { path: '/model', title: '版块管理', name: 'model_index', access: 1, component: resolve => { require(['@/views/model/model.vue'], resolve); } }
         ]
     },
     {
@@ -95,10 +95,10 @@ export const appRouter = [
         icon: 'email',
         title: '消息管理',
         name: 'msgManage',
-        access: 0,
+        access: 1,
         component: Main,
         children: [
-            { path: '/msgManage', title: '消息管理', name: 'msgManage_index', access: 0, component: resolve => { require(['@/views/message/messageM.vue'], resolve); } }
+            { path: '/msgManage', title: '消息管理', name: 'msgManage_index', access: 1, component: resolve => { require(['@/views/message/messageM.vue'], resolve); } }
         ]
     },
     {
@@ -106,10 +106,10 @@ export const appRouter = [
         icon: 'person-stalker',
         title: '用户管理',
         name: 'account',
-        access: 0,
+        access: 1,
         component: Main,
         children: [
-            { path: '/account', title: '用户管理', name: 'account_index', access: 0, component: resolve => { require(['@/views/account/account.vue'], resolve); } }
+            { path: '/account', title: '用户管理', name: 'account_index', access: 1, component: resolve => { require(['@/views/account/account.vue'], resolve); } }
         ]
     }
 ];

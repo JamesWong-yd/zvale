@@ -24,8 +24,8 @@
             <Input v-model="formValidate.type" :readonly="this.msgLook" placeholder="Enter your type"></Input>
           </FormItem>
           <FormItem label="发送时间" prop="sendDate">
-            <DatePicker v-model="formValidate.sendDate" :readonly="this.msgLook" type="datetime" placeholder="Select date and time" style="width: 200px"></DatePicker>
-            <Checkbox style="margin-left:20px;" :disabled="this.msgLook" @on-change="sendInTime">
+            <DatePicker v-model="formValidate.sendDate" :readonly="this.msgLook" format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="Select date and time" style="width: 200px"></DatePicker>
+            <Checkbox style="margin-left:20px;" :value="sendInTimeChecked" :disabled="this.msgLook" @on-change="sendInTime">
               <span>立即发送</span>
             </Checkbox>
           </FormItem>
@@ -36,8 +36,10 @@
             <Select v-model="formValidate.receiver" filterable multiple>
               <Option v-for="item in accountList" :value="item._id" :key="item._id">{{ item.name }}</Option>
             </Select>
-            <Checkbox :disabled="this.msgLook" @on-change="sendAllCount">
-              <span>所有用户<strong style="color:red">（注意：一旦选取所有用户，将会清空所选择的人员）</strong></span>
+            <Checkbox :value="sendInTimeChecked" :disabled="this.msgLook" @on-change="sendAllCount">
+              <span>所有用户
+                <strong style="color:red">（注意：取消勾选所有用户时将会清空所有选择人员）</strong>
+              </span>
             </Checkbox>
           </FormItem>
           <FormItem>
@@ -53,21 +55,31 @@
 
 <script>
 import Account from '@/api/account'
+import Message from '@/api/message'
+
 export default {
   name: 'msgManage_index',
   data() {
     return {
       handleButton: '1',
       msgLook: false,
+      allReceiverChecked: false,
+      sendInTimeChecked: false,
       formValidate: {
         title: '',
         type: '',
-        sendDate: '',
+        sendDate: {type:Date, default: ''},
         receiver: [],
         content: ''
       },
       accountList: [],
-      ruleValidate: {}
+      ruleValidate: {
+        title: { required: true, message: '标题不能为空', trigger: 'blur' },
+        type: { required: true, message: '类型不能为空', trigger: 'blur' },
+        sendDate: { required: true, message: '发送时间不能为空' },
+        content: { required: true, message: '内容不能为空', trigger: 'blur' },
+        receiver: { required: true, message: '接收者不能为空' },
+      }
     }
   },
   created() {
@@ -78,8 +90,15 @@ export default {
       const res = await Account.getAccountList(params)
       this.accountList = res.data
     },
+    _AddMessage: async function (req){
+      const res = await Message.addMessage(req)
+      if(res.status){
+        this.$Message.success(res.msg)
+        this.handleReset('formValidate')
+      }
+    },
     sendInTime(value) {
-      this.formValidate.sendDate = value && !this.msgLook ? new Date() * 1 : ''
+      this.formValidate.sendDate = value && !this.msgLook ? new Date() : ''
     },
     sendAllCount(value){
       this.formValidate.receiver = []
@@ -92,7 +111,8 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          // this._addAccount(this.formValidate)
+          this._AddMessage(this.formValidate)
+          console.log(this.formValidate.receiver)
         } else {
           this.$Message.error('请正确填写信息')
         }
