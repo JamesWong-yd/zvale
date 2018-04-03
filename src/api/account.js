@@ -5,8 +5,7 @@ module.exports = {
     // 获取账号信息
     getAccount: async req => {
         let _req = {
-            accountId: req,
-            t: new Date() * 1
+            accountId: req
         }
         const res = await axios.ajax({
             method: 'get',

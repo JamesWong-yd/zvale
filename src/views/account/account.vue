@@ -14,7 +14,7 @@
           <FormItem>
             <RadioGroup v-model="handleButton" type="button">
               <Radio label="1">创建用户</Radio>
-              <Radio label="0" :disabled="!this.editId">修改用户</Radio>
+              <Radio label="0" :disabled="!editId">修改用户</Radio>
             </RadioGroup>
           </FormItem>
           <FormItem label="账号" prop="account">

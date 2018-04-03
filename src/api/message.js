@@ -13,7 +13,20 @@ module.exports = {
         };
         const res = await axios.ajax({
             method: 'get',
-            url: '/messages',
+            url: '/messages/list',
+            params: _req
+        })
+        return res.data
+    },
+
+    // 获取信息
+    getMessage: async req => {
+        let _req = {
+            messageId: req
+        }
+        const res = await axios.ajax({
+            method:'get',
+            url:'/messages',
             params: _req
         })
         return res.data
@@ -24,7 +37,10 @@ module.exports = {
         if(!req) return
         if(req.receiver){
             req.receivers = req.receiver.join('##')
+            delete req.receiver
         }
+        if(req._id)delete req._id
+        if(req.createTime)delete req.createTime
         const res = await axios.ajax({
             method: 'post',
             url: './messages',

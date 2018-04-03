@@ -113,12 +113,12 @@ export default {
     pageChangeRender: function(page) {
       this.loading = true
       this.params.page = page
-      this._getMessageList(this, this.params)
+      this._getMessageList(this.params)
     },
     limitChangeRender: function(limit) {
       this.loading = true
       this.params.limit = limit
-      this._getMessageList(this, this.params)
+      this._getMessageList(this.params)
     },
     reloadRender: function() {
       this.loading = true

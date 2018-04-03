@@ -3,9 +3,11 @@ const os = require('os');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HappyPack = require('happypack');
-var happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+var happyThreadPool = HappyPack.ThreadPool({
+    size: os.cpus().length
+});
 
-function resolve (dir) {
+function resolve(dir) {
     return path.join(__dirname, dir);
 }
 
@@ -19,8 +21,7 @@ module.exports = {
         path: path.resolve(__dirname, '../dist/dist')
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
