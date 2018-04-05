@@ -61,11 +61,12 @@ export default {
               1: { text: '成功', color: '#2d8cf0' },
               0: { text: '已删除', color: '#ed3f14' }
             }
-            return h(
-              'span',
-              { style: { color: stateObj[idex].color } },
-              stateObj[idex].text
-            )
+            // return h(
+            //   'span',
+            //   { style: { color: stateObj[idex].color } },
+            //   stateObj[idex].text
+            // )
+            return 1
           }
         },
         {

@@ -104,7 +104,8 @@ export default {
       if(res.status){
         this.$Message.success(res.msg)
         this.$refs.messageTable.reloadRender()
-        this.handleReset('formValidate')
+        this.allReceiverChecked = false
+        this.sendInTimeChecked = false
       }
     },
     sendInTime(value) {
