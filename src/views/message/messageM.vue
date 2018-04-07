@@ -104,15 +104,16 @@ export default {
       if(res.status){
         this.$Message.success(res.msg)
         this.$refs.messageTable.reloadRender()
-        this.allReceiverChecked = false
-        this.sendInTimeChecked = false
+        this.handleReset('formValidate')
       }
     },
     sendInTime(value) {
       this.formValidate.sendDate = value ? new Date() : ''
+      this.sendInTimeChecked = value
     },
     sendAllCount(value){
       this.formValidate.receiver = []
+      this.allReceiverChecked = value
       if(value){
         for (const key in this.accountList) {
           this.formValidate.receiver.push(this.accountList[key]._id)
@@ -129,9 +130,9 @@ export default {
       })
     },
     handleReset(name) {
-      this.msgLook = false
       this.allReceiverChecked = false
       this.sendInTimeChecked = false
+      this.msgLook = false
       this.handleButton = '1'
       this.$refs[name].resetFields()
     },

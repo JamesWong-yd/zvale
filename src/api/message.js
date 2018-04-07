@@ -19,7 +19,33 @@ module.exports = {
         return res.data
     },
 
-    // 获取信息
+    // 获取用户信息数量
+    getMyMessageCount: async req => {
+        let _req = {
+            accountId: req
+        }
+        const res = await axios.ajax({
+            method:'get',
+            url:'/messages/myMessageCount',
+            params: _req
+        })
+        return res.data
+    },
+
+    // 获取用户信息
+    getMyMessage: async req => {
+        let _req = {
+            accountId: req
+        }
+        const res = await axios.ajax({
+            method:'get',
+            url:'/messages/myMessage',
+            params: _req
+        })
+        return res.data
+    },
+
+    // 获取信息管理信息
     getMessage: async req => {
         let _req = {
             messageId: req

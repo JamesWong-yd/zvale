@@ -70,6 +70,7 @@ import fullScreen from "./main-components/fullscreen.vue";
 import lockScreen from "./main-components/lockscreen/lockscreen.vue";
 import messageTip from "./main-components/message-tip.vue";
 import themeSwitch from "./main-components/theme-switch/theme-switch.vue";
+import {getMyMessageCount} from "@/api/message"
 import Cookies from "js-cookie";
 import util from "@/libs/util.js";
 
@@ -125,13 +126,15 @@ export default {
         this.$store.commit("addOpenSubmenu", pathArr[1].name);
       }
       this.userName = Cookies.get("_rma");
-      let messageCount = 3;
-      this.messageCount = messageCount.toString();
       this.checkTag(this.$route.name);
-      this.$store.commit("setMessageCount", 3);
+      this._getMyMessageCount()
     },
     toggleClick() {
       this.shrink = !this.shrink;
+    },
+    _getMyMessageCount: async function(accountId){
+      const res = await getMyMessageCount(accountId)
+      this.$store.commit("setMessageCount",parseInt(res.data.count));
     },
     handleClickUserDropdown(name) {
       if (name === "ownSpace") {

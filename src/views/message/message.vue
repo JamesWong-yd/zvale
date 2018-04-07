@@ -110,11 +110,6 @@ export default {
         content: ""
       },
       mesTitleColumns: [
-        // {
-        //     type: 'selection',
-        //     width: 50,
-        //     align: 'center'
-        // },
         {
           title: " ",
           key: "title",

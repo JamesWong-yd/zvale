@@ -9,7 +9,9 @@
 </template>
 
 <script>
+import Message from '@/api/message'
 import util from "@/libs/util.js";
+
 export default {
   name: "messageTip",
   props: {
