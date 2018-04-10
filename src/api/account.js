@@ -7,12 +7,12 @@ module.exports = {
         let _req = {
             accountId: req
         }
-        const res = await axios.ajax({
+        const res = await axios({
             method: 'get',
             url: '/accounts',
             params: _req
         })
-        return res.data
+        return res
     },
 
     // 获取账号列表
@@ -21,37 +21,36 @@ module.exports = {
             limit: req.limit || 10,
             page: req.page || 1,
             account: req.account,
-            name: req.name,
-            t: new Date() * 1
+            name: req.name
         };
         if (req.state) _req.state = req.state
-        const res = await axios.ajax({
+        const res = await axios({
             method: 'get',
             url: '/accounts/list',
             params: _req
         })
-        return res.data
+        return res
     },
 
     // 创建账号
     addAccount: async req => {
         if (!req) return
-        const res = await axios.ajax({
+        const res = await axios({
             method: 'post',
             url: '/accounts',
             data: req
         })
-        return res.data
+        return res
     },
 
     // 修改账号信息
     editAccount: async req => {
-        const res = await axios.ajax({
+        const res = await axios({
             method: 'post',
             url: '/accounts/edit',
             data: req
         })
-        return res.data
+        return res
     },
 
     // 验证账号是否存在
@@ -59,12 +58,12 @@ module.exports = {
         let _req = {
             account: req.account
         }
-        const res = await axios.ajax({
+        const res = await axios({
             method: 'get',
             url: '/accounts/validate',
             params: _req
         })
-        return res.data
+        return res
     },
 
     // 更新账号状态
@@ -73,11 +72,11 @@ module.exports = {
             id: req._id,
             state: req.state
         }
-        const res = await axios.ajax({
+        const res = await axios({
             method: 'post',
             url: '/accounts/updateState',
             data: req
         })
-        return res.data
+        return res
     }
 };

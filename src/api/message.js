@@ -8,15 +8,14 @@ module.exports = {
             page: req.page || 1,
             title: req.title,
             sendDateStart: req.sendDateStart,
-            sendDateEnd: req.sendDateEnd,
-            t: new Date() * 1
+            sendDateEnd: req.sendDateEnd
         };
-        const res = await axios.ajax({
+        const res = await axios({
             method: 'get',
             url: '/messages/list',
             params: _req
         })
-        return res.data
+        return res
     },
 
     // 获取用户信息数量
@@ -24,12 +23,12 @@ module.exports = {
         let _req = {
             accountId: req
         }
-        const res = await axios.ajax({
-            method:'get',
-            url:'/messages/myMessageCount',
+        const res = await axios({
+            method: 'get',
+            url: '/messages/myMessageCount',
             params: _req
         })
-        return res.data
+        return res
     },
 
     // 获取用户信息
@@ -37,12 +36,12 @@ module.exports = {
         let _req = {
             accountId: req
         }
-        const res = await axios.ajax({
-            method:'get',
-            url:'/messages/myMessage',
+        const res = await axios({
+            method: 'get',
+            url: '/messages/myMessage',
             params: _req
         })
-        return res.data
+        return res
     },
 
     // 获取信息管理信息
@@ -50,29 +49,29 @@ module.exports = {
         let _req = {
             messageId: req
         }
-        const res = await axios.ajax({
-            method:'get',
-            url:'/messages',
+        const res = await axios({
+            method: 'get',
+            url: '/messages',
             params: _req
         })
-        return res.data
+        return res
     },
 
     // 发送信息
     addMessage: async req => {
-        if(!req) return
-        if(req.receiver){
+        if (!req) return
+        if (req.receiver) {
             req.receivers = req.receiver.join('##')
             delete req.receiver
         }
-        if(req._id)delete req._id
-        if(req.createTime)delete req.createTime
-        const res = await axios.ajax({
+        if (req._id) delete req._id
+        if (req.createTime) delete req.createTime
+        const res = await axios({
             method: 'post',
             url: './messages',
             data: req
         })
-        return res.data
+        return res
     },
 
     // 删除信息
@@ -81,11 +80,11 @@ module.exports = {
             id: req.id,
             state: 0
         }
-        const res = await axios.ajax({
+        const res = await axios({
             method: 'post',
             url: '/messages/remove',
             data: _req
         })
-        return res.data
+        return res
     }
 };

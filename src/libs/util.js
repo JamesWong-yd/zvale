@@ -1,4 +1,3 @@
-import axios from 'axios';
 import env from '../../build/env';
 
 let util = {
@@ -8,18 +7,6 @@ util.title = function (title) {
     title = title || 'Zvale后台管理';
     window.document.title = title;
 };
-
-// 设置基础后台请求url
-const ajaxUrl = env === 'development'
-    ? 'http://localhost:3000'
-    : env === 'production'
-        ? 'https://www.url.com/'
-        : 'https://debug.url.com/';
-
-util.ajax = axios.create({
-    baseURL: ajaxUrl,
-    timeout: 30000
-});
 
 util.inOf = function (arr, targetArr) {
     let res = true;
