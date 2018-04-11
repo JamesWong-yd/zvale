@@ -33,9 +33,10 @@ ajax.interceptors.request.use(
             config.data.t = new Date() * 1;
         }
         // jwt token
-        if (true) {
-            config.headers.Authorization = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.Inc3ejVwUVJEaXJQQmo4TzR4ZldaYlc4ZnpmY2hDK0VpNytQMmZyT0lTS1ppN3NHUXA1M0I0dEFRZ1hkM2tjZE14UENiL2FaMTlXQ2RoUnU4Qko4S3ptK1VxVUVxbjQzUjIvUk9ZY3pHK3ZTNC9keUpNbzVDZ3UxMm9saHlDZmJhbWt2d2xiek5zQ1J0UEdKZEFTb0ci.ooAugK7Ti7Ayzt42SLG2vGcQSkgdW7__FW4W7TLDGPk';
+        if (localStorage._rma) {
+            config.headers.Authorization = localStorage._rma;
         }
+        
         return config
     },
     err => {
@@ -66,9 +67,9 @@ ajax.interceptors.response.use(
                         path: '/500'
                     });
                     break;
-                    // case 404:
-                    //     router.push({ replace: true, path: '/404' });
-                    //     break;
+                // case 404:
+                //     router.push({ replace: true, path: '/404' });
+                //     break;
             }
         }
         return Promise.reject(err.response.data);

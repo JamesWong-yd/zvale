@@ -33,15 +33,16 @@
 </template>
 
 <script>
+import Account from '../api/account'
 import Cookies from 'js-cookie'
+
 export default {
   data() {
     return {
       form: {
-        userName: '',
+        userName: 'admin',
         password: ''
       },
-      rememberAccount: false,
       rules: {
         userName: [
           { required: true, message: '账号不能为空', trigger: 'blur' }
@@ -54,25 +55,39 @@ export default {
     this.form.userName = Cookies.get('_rma')
   },
   methods: {
-    handleSubmit() {
+    _login: async function(req) {
+      const res = await Account.login(req)
+      if (res.status) {
+        res.data.state === 1
+          ? this.setState(res.data)
+          : this.$Message.error('用户已失效，请联系管理员')
+      } else {
+        this.$Message.error(res.msg)
+      }
+    },
+    handleSubmit: function() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          // 服务器验证
-          Cookies.set('_rma', this.form.userName)
-          this.$store.commit(
-            'setAvator',
-            'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg'
-          )
-          // 权限
-          if (this.form.userName === 'iview_admin') {
-            Cookies.set('access', 0)
-          } else {
-            Cookies.set('access', 1)
-          }
-          this.$router.push({
-            name: 'home_index'
-          })
+          this._login(this.form)
         }
+      })
+    },
+    setState(data) {
+      // 服务器验证
+      Cookies.set('_rma', this.form.userName, { expires: 1 })
+      localStorage._rma = data.token
+      this.$store.commit(
+        'setAvator',
+        'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg'
+      )
+      // 权限(未处理)
+      if (this.form.userName === 'iview_admin') {
+        Cookies.set('access', 0, { expires: 1 })
+      } else {
+        Cookies.set('access', 1, { expires: 1 })
+      }
+      this.$router.push({
+        name: 'home_index'
       })
     }
   }

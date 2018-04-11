@@ -78,5 +78,19 @@ module.exports = {
             data: req
         })
         return res
+    },
+
+    // 登录
+    login: async req => {
+        let _req = {
+            account: req.userName,
+            pwd: req.password
+        }
+        const res = await axios({
+            method: 'post',
+            url: '/login',
+            data: _req
+        })
+        return res
     }
 };
