@@ -175,7 +175,7 @@ const app = {
         },
         clearOpenedSubmenu(state) {
             state.openedSubmenuArr.length = 0;
-            state.pageOpenedList = [ { title: '首页', path: '', name: 'home_index' } ];
+            state.pageOpenedList = [{ title: '首页', path: '', name: 'home_index' }];
         },
         setMessageCount(state, count) {
             state.messageCount = count;
