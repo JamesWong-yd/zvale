@@ -2,6 +2,19 @@
   <div>
     <Row :gutter="20">
       <Col span="3">
+        <div class="my-label">标题</div>
+      </Col>
+      <Col span="7">
+        <Input v-model="params.title" @on-enter="searchData" clearable="clearable"></Input>
+      </Col>
+      <Col span="3">
+        <div class="my-label">发送时间</div>
+      </Col>
+      <Col span="8">
+        <DatePicker v-model="sendDate" type="datetimerange" format="yyyy-MM-dd HH:mm:ss" placeholder="Select date and time(Excluding seconds)" style="width: 100%"></DatePicker>
+      </Col>
+      <Col span="3">
+      <Button type="primary" @click="searchData">搜索</Button>
       </Col>
     </Row>
     <br>
@@ -16,10 +29,13 @@
 
 <script>
 import Message from '@/api/message'
+import Moment from 'moment'
+
 export default {
   data() {
     return {
       loading: true,
+      sendDate: '',
       params: {
         limit: 10,
         page: 1,
@@ -42,8 +58,10 @@ export default {
         },
         {
           title: '发送时间',
-          key: 'sendDate',
-          align: 'center'
+          align: 'center',
+          render: (h, params) => {
+            return Moment(params.row.sendDate).format("YYYY-MM-DD HH:mm:ss")
+          }
         },
         {
           title: '发送人',
@@ -125,14 +143,18 @@ export default {
       this.params.title = ''
       this.params.sendDateStart = ''
       this.params.sendDateEnd = ''
-      this._getMessageList(this, this.params)
+      this._getMessageList(this.params)
     },
     rowData: function(res) {
       this.$emit('selectData', res)
     },
     searchData: function() {
+      if(this.sendDate){
+        this.params.sendDateStart = this.sendDate[0],
+        this.params.sendDateEnd = this.sendDate[1]
+      }
       this.loading = true
-      this._getAccountList(this, this.params)
+      this._getMessageList(this.params)
     },
     removeMessage: async function(req, callback) {
       const res = await Message.removeMessage({ id: req._id})
@@ -146,3 +168,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.my-label {
+  line-height: 32px;
+  text-align: center;
+}
+</style>

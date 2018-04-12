@@ -1,44 +1,48 @@
 <style lang="less">
-@import "../styles/unlock.less";
+@import '../styles/unlock.less';
 </style>
 
 <template>
-    <transition name="show-unlock">
-        <div class="unlock-body-con" v-if="showUnlock" @keydown.enter="handleUnlock">
-            <div @click="handleClickAvator" class="unlock-avator-con" :style="{marginLeft: avatorLeft}">
-                <img class="unlock-avator-img" :src="avatorPath">
-                <div  class="unlock-avator-cover">
-                    <span><Icon type="unlocked" :size="30"></Icon></span>
-                    <p>解锁</p>
-                </div>
-            </div>
-            <div class="unlock-avator-under-back" :style="{marginLeft: avatorLeft}"></div>
-            <div class="unlock-input-con">
-                <div class="unlock-input-overflow-con">
-                    <div class="unlock-overflow-body" :style="{right: inputLeft}">
-                        <input ref="inputEle" v-model="password" class="unlock-input" type="password" placeholder="请输入解锁密码" />
-                        <button ref="unlockBtn" @mousedown="unlockMousedown" @mouseup="unlockMouseup" @click="handleUnlock" class="unlock-btn"><Icon color="white" type="key"></Icon></button>
-                    </div>
-                </div>
-            </div>
-            <div class="unlock-locking-tip-con">已锁定</div>
+  <transition name="show-unlock">
+    <div class="unlock-body-con" v-if="showUnlock" @keydown.enter="handleUnlock">
+      <div @click="handleClickAvator" class="unlock-avator-con" :style="{marginLeft: avatorLeft}">
+        <img class="unlock-avator-img" :src="avatorPath">
+        <div class="unlock-avator-cover">
+          <span>
+            <Icon type="unlocked" :size="30"></Icon>
+          </span>
+          <p>解锁</p>
         </div>
-    </transition>
+      </div>
+      <div class="unlock-avator-under-back" :style="{marginLeft: avatorLeft}"></div>
+      <div class="unlock-input-con">
+        <div class="unlock-input-overflow-con">
+          <div class="unlock-overflow-body" :style="{right: inputLeft}">
+            <input ref="inputEle" v-model="password" class="unlock-input" type="password" placeholder="请输入解锁密码" />
+            <button ref="unlockBtn" @mousedown="unlockMousedown" @mouseup="unlockMouseup" @click="handleUnlock" class="unlock-btn">
+              <Icon color="white" type="key"></Icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="unlock-locking-tip-con">已锁定</div>
+    </div>
+  </transition>
 </template>
 
 <script>
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie'
 import md5 from 'md5'
 
 export default {
-  name: "Unlock",
+  name: 'Unlock',
   data() {
     return {
-      avatorLeft: "0px",
-      inputLeft: "400px",
-      password: "",
+      avatorLeft: '0px',
+      inputLeft: '400px',
+      password: '',
       check: null
-    };
+    }
   },
   props: {
     showUnlock: {
@@ -48,7 +52,7 @@ export default {
   },
   computed: {
     avatorPath() {
-      return localStorage.avatorImgPath;
+      return localStorage.avatorImgPath
     }
   },
   methods: {
@@ -56,28 +60,30 @@ export default {
       return localStorage.screenPwd === md5(this.password)
     },
     handleClickAvator() {
-      this.avatorLeft = "-180px";
-      this.inputLeft = "0px";
-      this.$refs.inputEle.focus();
+      this.avatorLeft = '-180px'
+      this.inputLeft = '0px'
+      this.$refs.inputEle.focus()
     },
     handleUnlock() {
       if (this.validator()) {
-        this.avatorLeft = "0px";
-        this.inputLeft = "400px";
-        this.password = "";
-        Cookies.set("locking", "0");
+        this.avatorLeft = '0px'
+        this.inputLeft = '400px'
+        this.password = ''
+        Cookies.set('locking', '0')
         localStorage.removeItem('screenPwd')
-        this.$emit("on-unlock");
+        this.$emit('on-unlock')
       } else {
-        this.$Message.error("密码错误,请重新输入。如果忘了密码，清除浏览器缓存重新登录即可");
+        this.$Message.error(
+          '密码错误,请重新输入。如果忘了密码，清除浏览器缓存重新登录即可'
+        )
       }
     },
     unlockMousedown() {
-      this.$refs.unlockBtn.className = "unlock-btn click-unlock-btn";
+      this.$refs.unlockBtn.className = 'unlock-btn click-unlock-btn'
     },
     unlockMouseup() {
-      this.$refs.unlockBtn.className = "unlock-btn";
+      this.$refs.unlockBtn.className = 'unlock-btn'
     }
   }
-};
+}
 </script>

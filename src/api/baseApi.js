@@ -9,7 +9,8 @@ import {
 import Cookies from 'js-cookie';
 
 // 设置基础后台请求url
-const ajaxUrl = 'http://localhost:3000';
+const ajaxUrl = 'http://localhost:3000/bm/';
+// const ajaxUrl = 'https://bm.zvale.com/bm/';
 
 let ajax = axios.create({
     baseURL: ajaxUrl,
@@ -36,10 +37,11 @@ ajax.interceptors.request.use(
         if (localStorage._rma) {
             config.headers.Authorization = localStorage._rma;
         }
-        
+
         return config
     },
     err => {
+        console.log(err)
         return Promise.reject(err);
     }
 );
@@ -50,22 +52,19 @@ ajax.interceptors.response.use(
         return res.data;
     },
     err => {
+        if (!err.response) {
+            err.response = { status: 500 };
+        }
         if (err.response) {
             switch (err.response.status) {
                 case 401:
                     Message.warning(err.response.data.msg);
                     // 返回 401 清除token信息并跳转到登录页面
                     Cookies.remove('_rma');
-                    router.push({
-                        replace: true,
-                        name: 'login'
-                    });
+                    router.push({ replace: true, name: 'login' });
                     break;
                 case 500:
-                    router.push({
-                        replace: true,
-                        path: '/500'
-                    });
+                    router.push({ replace: true, path: '/500' });
                     break;
                 // case 404:
                 //     router.push({ replace: true, path: '/404' });
@@ -75,7 +74,5 @@ ajax.interceptors.response.use(
         return Promise.reject(err.response.data);
     }
 );
-
-// 统一get/post 方法
 
 export default ajax;

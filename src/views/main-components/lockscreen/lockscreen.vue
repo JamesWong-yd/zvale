@@ -39,7 +39,7 @@ export default {
       this.modal = true
       this.screenPwd = ''
     },
-    modalOk(){
+    modalOk() {
       localStorage.screenPwd = md5(this.screenPwd)
       this.lockScreen()
     },
