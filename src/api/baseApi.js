@@ -41,7 +41,6 @@ ajax.interceptors.request.use(
         return config
     },
     err => {
-        console.log(err)
         return Promise.reject(err);
     }
 );
@@ -53,7 +52,7 @@ ajax.interceptors.response.use(
     },
     err => {
         if (!err.response) {
-            err.response = { status: 500 };
+            Message.warning('请求超时');
         }
         if (err.response) {
             switch (err.response.status) {
@@ -61,17 +60,17 @@ ajax.interceptors.response.use(
                     Message.warning(err.response.data.msg);
                     // 返回 401 清除token信息并跳转到登录页面
                     Cookies.remove('_rma');
-                    router.push({ replace: true, name: 'login' });
+                    router.replace({ replace: true, name: 'login' });
                     break;
                 case 500:
-                    router.push({ replace: true, path: '/500' });
+                    router.replace({ replace: true, path: '/500' });
                     break;
-                // case 404:
+                // case 404:    
                 //     router.push({ replace: true, path: '/404' });
                 //     break;
             }
         }
-        return Promise.reject(err.response.data);
+        return Promise.reject(err);
     }
 );
 

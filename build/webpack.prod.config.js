@@ -70,7 +70,7 @@ module.exports = merge(webpackBaseConfig, {
             ignore: []
         }),
         new HtmlWebpackPlugin({
-            title: 'iView admin v' + package.version,
+            title: 'zvale_v' + package.version,
             favicon: './zvale.ico',
             filename: '../index.html',
             template: './src/template/index.ejs',

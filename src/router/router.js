@@ -59,46 +59,57 @@ export const otherRouter = {
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
     {
-        path: '/access',
-        icon: 'key',
-        name: 'access',
-        title: '权限管理',
-        component: Main,
-        children: [
-            { path: '/access', title: '权限管理', name: 'access_index', component: resolve => { require(['@/views/access/access.vue'], resolve); } }
-        ]
-    },
-    {
-        path: '/access-test',
-        icon: 'lock-combination',
-        title: '权限测试页',
-        name: 'accesstest',
-        access: 1,
-        component: Main,
-        children: [
-            { path: '/accesstest', title: '权限测试页', name: 'accesstest_index', access: 1, component: resolve => { require(['@/views/access/access-test.vue'], resolve); } }
-        ]
-    },
-    {
         path: '/model',
         icon: 'android-apps',
-        title: '版块管理',
+        title: '板块管理',
         name: 'model',
-        access: 1,
         component: Main,
         children: [
-            { path: '/model', title: '版块管理', name: 'model_index', access: 1, component: resolve => { require(['@/views/model/model.vue'], resolve); } }
+            { path: '/model', title: '板块管理', name: 'model_index', component: resolve => { require(['@/views/model/model.vue'], resolve); } }
         ]
     },
     {
-        path: '/msgManage',
+        path: '/web-setting',
+        icon: 'ios-settings-strong',
+        title: '网站配置',
+        name: 'websetting',
+        component: Main,
+        children: [
+            { path: '/web-setting', title: '基础配置', name: 'websetting_index', access: 1, component: resolve => { require(['@/views/syssetting/web/web.vue'], resolve); } },
+            { path: '/websetting_model', title: '板块配置', name: 'websetting_model', component: resolve => { require(['@/views/syssetting/model/model.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/resource',
+        icon: 'images',
+        title: '资源管理',
+        name: 'resource',
+        access: 1,
+        component: Main,
+        children: [
+            { path: '/resource', title: '资源管理', name: 'resource_index', component: resolve => { require(['@/views/resource/resource.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/article',
+        icon: 'ios-paper',
+        title: '文章管理',
+        name: 'article',
+        access: 1,
+        component: Main,
+        children: [
+            { path: '/article', title: '文章管理', name: 'article_index', component: resolve => { require(['@/views/article/article.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/msg-manage',
         icon: 'email',
-        title: '消息管理',
+        title: '站内消息',
         name: 'msgManage',
         access: 1,
         component: Main,
         children: [
-            { path: '/msgManage', title: '消息管理', name: 'msgManage_index', access: 1, component: resolve => { require(['@/views/message/messageM.vue'], resolve); } }
+            { path: '/msg-manage', title: '站内消息', name: 'msgManage_index', component: resolve => { require(['@/views/message/messageM.vue'], resolve); } }
         ]
     },
     {
@@ -109,7 +120,28 @@ export const appRouter = [
         access: 1,
         component: Main,
         children: [
-            { path: '/account', title: '用户管理', name: 'account_index', access: 1, component: resolve => { require(['@/views/account/account.vue'], resolve); } }
+            { path: '/account', title: '用户管理', name: 'account_index', component: resolve => { require(['@/views/account/account.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/access',
+        icon: 'android-alert',
+        name: 'access',
+        title: '系统权限',
+        component: Main,
+        children: [
+            { path: '/access', title: '系统权限', name: 'access_index', component: resolve => { require(['@/views/access/access.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/logs',
+        icon: 'clipboard',
+        title: '日志审计',
+        name: 'logs',
+        access: 1,
+        component: Main,
+        children: [
+            { path: '/logs', title: '日志审计', name: 'logs_index', component: resolve => { require(['@/views/logs/logs.vue'], resolve); } }
         ]
     }
 ];
