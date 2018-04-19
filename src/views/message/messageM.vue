@@ -47,7 +47,7 @@
               <Input v-model="msgLookReceiver" readonly="readonly" type="textarea" :autosize="{minRows: 2}" placeholder="Enter something..."></Input>
             </div>
           </FormItem>
-          <FormItem v-if="handleButton==='0'" label="发送时间">
+          <FormItem v-if="handleButton==='0'" label="创建时间">
             <Input v-model="formValidate.createTime" readonly="readonly" ></Input>
           </FormItem>
           <FormItem>
