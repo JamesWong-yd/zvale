@@ -69,17 +69,6 @@ export const appRouter = [
         ]
     },
     {
-        path: '/web-setting',
-        icon: 'ios-settings-strong',
-        title: '网站配置',
-        name: 'websetting',
-        component: Main,
-        children: [
-            { path: '/web-setting', title: '基础配置', name: 'websetting_index', access: 1, component: resolve => { require(['@/views/syssetting/web/web.vue'], resolve); } },
-            { path: '/websetting_model', title: '板块配置', name: 'websetting_model', component: resolve => { require(['@/views/syssetting/model/model.vue'], resolve); } }
-        ]
-    },
-    {
         path: '/resource',
         icon: 'images',
         title: '资源管理',
@@ -99,6 +88,17 @@ export const appRouter = [
         component: Main,
         children: [
             { path: '/article', title: '文章管理', name: 'article_index', component: resolve => { require(['@/views/article/article.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/web-setting',
+        icon: 'ios-settings-strong',
+        title: '网站配置',
+        name: 'websetting',
+        component: Main,
+        children: [
+            { path: '/web-setting', title: '基础配置', name: 'websetting_index', access: 1, component: resolve => { require(['@/views/syssetting/web/web.vue'], resolve); } },
+            { path: '/websetting_model', title: '板块配置', name: 'websetting_model', component: resolve => { require(['@/views/syssetting/model/model.vue'], resolve); } }
         ]
     },
     {
