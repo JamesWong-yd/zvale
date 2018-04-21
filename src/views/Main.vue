@@ -397,6 +397,7 @@ export default {
     top: 100px;
     right: 0;
     bottom: 0;
+    min-width: 1000px;
     overflow: auto;
     background-color: #f0f0f0;
     z-index: 1;

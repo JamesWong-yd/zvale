@@ -61,11 +61,11 @@ export const appRouter = [
     {
         path: '/model',
         icon: 'android-apps',
-        title: '板块管理',
+        title: '版块管理',
         name: 'model',
         component: Main,
         children: [
-            { path: '/model', title: '板块管理', name: 'model_index', component: resolve => { require(['@/views/model/model.vue'], resolve); } }
+            { path: '/model', title: '版块管理', name: 'model_index', component: resolve => { require(['@/views/model/model.vue'], resolve); } }
         ]
     },
     {
@@ -97,8 +97,10 @@ export const appRouter = [
         name: 'websetting',
         component: Main,
         children: [
-            { path: '/web-setting', title: '基础配置', name: 'websetting_index', access: 1, component: resolve => { require(['@/views/syssetting/web/web.vue'], resolve); } },
-            { path: '/websetting_model', title: '板块配置', name: 'websetting_model', component: resolve => { require(['@/views/syssetting/model/model.vue'], resolve); } }
+            { path: '/web-setting', title: '基础配置', name: 'websetting_index', access: 1, component: resolve => { require(['@/views/syssetting/base/base.vue'], resolve); } },
+            { path: '/websetting_header', title: '头部模型', name: 'websetting_header', component: resolve => { require(['@/views/syssetting/header/header.vue'], resolve); } },
+            { path: '/websetting_footer', title: '尾部模型', name: 'websetting_footer', component: resolve => { require(['@/views/syssetting/footer/footer.vue'], resolve); } },
+            { path: '/websetting_model', title: '版块模型', name: 'websetting_model', component: resolve => { require(['@/views/syssetting/model/model.vue'], resolve); } }
         ]
     },
     {
