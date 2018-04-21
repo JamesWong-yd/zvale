@@ -7,7 +7,7 @@
           <input type="text" v-model="formValidate.title" placeholder="Enter your web title">
         </div>
         <div>
-          <div v-if="formValidate.headerType" :is="formValidate.headerType" :headerInfo="headerInfo"></div>
+          <div v-if="headerInfo.type" :is="headerInfo.type" :headerInfo="headerInfo"></div>
           <div v-else class="zvale-header-select" @click="selectModel">
             点击选择头部模型
           </div>
@@ -16,7 +16,7 @@
           这是内容主题
         </div>
         <div>
-          <div v-if="formValidate.footerType" :is="formValidate.footerType" :footerInfo="footerInfo"></div>
+          <div v-if="footerInfo.type" :is="footerInfo.type" :footerInfo="footerInfo"></div>
           <div v-else class="zvale-footer-select">
             点击选择底部模型
           </div>
@@ -42,29 +42,24 @@ export default {
         description: '',
         registerNo: '',
         company: '',
-        headerType: '',
-        footerType: ''
       },
       ruleValidate: {},
       headerInfo: {
+        type: '',
         background: '#ccc',
-        logo: {
-          type: 'text',
-          content: '666'
-        },
+        logoType: 'text',
+        logoContent: '666',
         color: '#fff',
-        activeNav: {
-          type: 'border', // border \ text \ background
-          color: 'red',
-          otherColor: '#dac'
-        }
+        activeNavType: 'border', // border \ text \ background
+        activeNavColor: 'red',
+        activeNavOtherColor: '#dac'
       },
       footerInfo: {}
     }
   },
   methods: {
     selectModel(){
-      this.formValidate.headerType = 'header-normal'
+      this.headerInfo.type = 'header-normal'
     }
   },
   components: {

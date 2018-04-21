@@ -2,8 +2,8 @@
   <header class="zvale-header-box" :style="headerStyle">
     <div class="zvale-header">
       <div class="zvale-logo" @click="goPage('/index')">
-        <img class="zvale-logo-image" v-if="headerInfo.logo.type==='image'" :src="headerInfo.logo.content">
-        <div v-else class="zvale-logo-text">{{headerInfo.logo.content}}</div>
+        <img class="zvale-logo-image" v-if="headerInfo.logoType==='image'" :src="headerInfo.logo.content">
+        <div v-else class="zvale-logo-text">{{headerInfo.logoContent}}</div>
       </div>
       <ul class="zvale-nav">
         <li v-for="(nav, index) in nav" @mouseover="hoverColor($event, nav.path, true)" @mouseout="hoverColor($event, nav.path, false)" :style="navStyle(nav.path)" :key="index" @click="goPage(nav.path)">{{nav.name}}</li>
@@ -16,16 +16,12 @@ export default {
   props: {
     headerInfo: {
       background: String,
-      logo: {
-        type: String,
-        content: String
-      },
+      logoType: String,
+      logoContent: String,
       color: String,
-      activeNav: {
-        type: String,
-        color: String,
-        otherColor: String
-      }
+      activeNavType: String,
+      activeNavColor: String,
+      activeNavOthercolor: String
     }
   },
   data() {
@@ -54,11 +50,11 @@ export default {
     },
     hoverColor(event, index, action) {
       const that = event.currentTarget
-      const hoverType = this.headerInfo.activeNav.type
+      const hoverType = this.headerInfo.activeNavType
       const hoverColor = action
-        ? this.headerInfo.activeNav.color
+        ? this.headerInfo.activeNavColor
         : this.headerInfo.color
-      const otherHoverColor = this.headerInfo.activeNav.otherColor
+      const otherHoverColor = this.headerInfo.activeNavOtherColor
       if (this.activeIndex !== index) {
         that.style.color = hoverColor
         if (hoverType === 'border') {
@@ -72,14 +68,14 @@ export default {
     navStyle(index) {
       const actnav = { color: this.headerInfo.color }
       if (this.activeIndex === index) {
-        actnav.color = `${this.headerInfo.activeNav.color}`
-        if (this.headerInfo.activeNav.type === 'border') {
+        actnav.color = `${this.headerInfo.activeNavColor}`
+        if (this.headerInfo.activeNavType === 'border') {
           actnav.borderBottom = `3px solid ${
-            this.headerInfo.activeNav.otherColor
+            this.headerInfo.activeNavOtherColor
           }`
         }
-        if (this.headerInfo.activeNav.type === 'background') {
-          actnav.background = this.headerInfo.activeNav.otherColor
+        if (this.headerInfo.activeNavType === 'background') {
+          actnav.background = this.headerInfo.activeNavOtherColor
         }
       }
       return actnav
