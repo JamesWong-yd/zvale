@@ -7,10 +7,7 @@ import {
     Message
 } from 'iview';
 import Cookies from 'js-cookie';
-
-// 设置基础后台请求url
-const ajaxUrl = 'http://localhost:3000/bm/';
-// const ajaxUrl = 'https://bm.zvale.com/bm/';
+import ajaxUrl from './service';
 
 let ajax = axios.create({
     baseURL: ajaxUrl,

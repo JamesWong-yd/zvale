@@ -13,16 +13,12 @@
           </div>
         </li>
       </ul>
-      <Page :total="100" show-total></Page>
+      <Page :total="headermodelLength" :page-size="limit" show-total></Page>
       <Spin size="large" fix v-if="formspinShow"></Spin>
-      <Modal v-model="addModal"
-             :mask-closable="false"
-             :styles="{width:'90%',top: '20px'}"
-             :closable="false"
-             title="创建头部模型">
+      <Modal v-model="addModal" :mask-closable="false" :styles="{width:'90%',top: '20px'}" :closable="false" title="创建头部模型">
         <div v-if="addModal" :is="addModel"></div>
         <div slot="footer">
-          <Button  type="primary" @click="addModalOk" size="large">关闭</Button>
+          <Button type="primary" @click="addModalOk" size="large">关闭</Button>
         </div>
       </Modal>
     </Card>
@@ -30,68 +26,41 @@
 </template>
 
 <script>
+import { getHeaderModelList } from '@/api/syssetting'
 export default {
   data() {
     return {
+      headermodelLength: 0,
+      limit: 5,
       formspinShow: true,
       addModal: false,
       addModel: 'addIndex',
-      headerInfo: [
-        {
-          name: 'this is title',
-          description:
-            'I dont know what i said ,but i know here is description.',
-          type: 'header-normal',
-          background: '#ccc',
-          logoType: 'text',
-          logoContent: '666',
-          color: '#fff',
-          activeNavType: 'background', // border \ text \ background
-          activeNavColor: '#896',
-          activeNavOtherColor: '#aca'
-        },
-        {
-          name: 'this is title',
-          description:
-            'I dont know what i said ,but i know here is description.',
-          type: 'header-normal',
-          background: '#fc1',
-          logoType: 'text',
-          logoContent: '666',
-          color: '#fff',
-          activeNavType: 'border', // border \ text \ background
-          activeNavColor: 'red',
-          activeNavOtherColor: '#dac'
-        },
-        {
-          name: 'this is title',
-          description:
-            'I dont know what i said ,but i know here is description.',
-          type: 'header-normal',
-          background: '#ccc',
-          logoType: 'text',
-          logoContent: '23123',
-          color: '#fff',
-          activeNavType: 'text', // border \ text \ background
-          activeNavColor: 'red',
-          activeNavOtherColor: '#dac'
-        }
-      ]
+      headerInfo: []
     }
   },
   created() {
-    this.formspinShow = false
+    this._getHeaderModelList()
   },
   methods: {
+    _getHeaderModelList: async function(page) {
+      page = page || 1
+      const res = await getHeaderModelList(page)
+      if (res.status) {
+        this.formspinShow = false
+        this.headerInfo = res.data
+        this.headermodelLength = res.count
+      }
+    },
     addHeaderModel() {
       this.addModal = true
     },
     addModalOk() {
+      this._getHeaderModelList(1)
       this.addModal = false
     }
   },
   components: {
-    'addIndex': resolve => {
+    addIndex: resolve => {
       require(['./components/index.vue'], resolve)
     },
     'header-normal': resolve => {

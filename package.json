@@ -10,10 +10,6 @@
     "lint": "eslint --fix --ext .js,.vue src",
     "test": "npm run lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/iview/iview-admin.git"
-  },
   "author": "James Wong<380928526@qq.com>",
   "license": "MIT",
   "dependencies": {
