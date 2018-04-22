@@ -35,7 +35,7 @@
 export default {
   data() {
     return {
-      formspinShow: false,
+      formspinShow: true,
       formValidate: {
         title: '',
         keywords: '',
@@ -56,6 +56,9 @@ export default {
       },
       footerInfo: {}
     }
+  },
+  created () {
+    this.formspinShow = false
   },
   methods: {
     selectModel(){

@@ -2,7 +2,7 @@
   <header class="zvale-header-box" :style="headerStyle">
     <div class="zvale-header">
       <div class="zvale-logo" @click="goPage('/index')">
-        <img class="zvale-logo-image" v-if="headerInfo.logoType==='image'" :src="headerInfo.logo.content">
+        <img class="zvale-logo-image" v-if="headerInfo.logoType==='image'" :src="headerInfo.logoContent">
         <div v-else class="zvale-logo-text">{{headerInfo.logoContent}}</div>
       </div>
       <ul class="zvale-nav">
@@ -21,7 +21,7 @@ export default {
       color: String,
       activeNavType: String,
       activeNavColor: String,
-      activeNavOthercolor: String
+      activeNavOtherColor: String
     }
   },
   data() {
@@ -41,11 +41,11 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     this.activeIndex = '/index'
   },
   methods: {
-    goPage(path){
+    goPage(path) {
       this.activeIndex = path
     },
     hoverColor(event, index, action) {
