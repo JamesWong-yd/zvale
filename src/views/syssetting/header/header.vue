@@ -13,7 +13,7 @@
           </div>
         </li>
       </ul>
-      <Page :total="headermodelLength" :page-size="limit" show-total></Page>
+      <Page :total="headermodelLength" @on-change="changePage" :page-size="limit" show-total></Page>
       <Spin size="large" fix v-if="formspinShow"></Spin>
       <Modal v-model="addModal" :mask-closable="false" :styles="{width:'90%',top: '20px'}" :closable="false" title="创建头部模型">
         <div v-if="addModal" :is="addModel"></div>
@@ -43,13 +43,17 @@ export default {
   },
   methods: {
     _getHeaderModelList: async function(page) {
+      this.formspinShow = true
       page = page || 1
-      const res = await getHeaderModelList(page)
+      const res = await getHeaderModelList({ page: page })
       if (res.status) {
         this.formspinShow = false
         this.headerInfo = res.data
         this.headermodelLength = res.count
       }
+    },
+    changePage(page) {
+      this._getHeaderModelList(page)
     },
     addHeaderModel() {
       this.addModal = true
