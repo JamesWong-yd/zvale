@@ -33,6 +33,7 @@
 
 <script>
 export default {
+  name: 'websetting_index',
   data() {
     return {
       formspinShow: true,

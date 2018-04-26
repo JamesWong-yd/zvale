@@ -29,16 +29,25 @@
         </div>
       </div>
     </Card>
+    <Modal v-model="resourcemodal" title="查看资源" @on-ok="closeModal" @ok-text="关闭">
+      <div class="zvale-resource-modal">
+        <img v-if="this.resourcePath" :src="resourcePathCurrent" alt="">
+      </div>
+    </Modal>
   </div>
 </template>
 
 <script>
 import Resource from '@/api/resource'
 import Moment from 'moment'
+import service from '@/api/service'
 
 export default {
+  name: 'resource_index',
   data() {
     return {
+      resourcemodal: false,
+      resourcePath: '',
       loading: true,
       sendDate: '',
       params: {
@@ -98,7 +107,7 @@ export default {
         {
           title: '操作',
           align: 'center',
-          width: '120px',
+          width: '150px',
           render: (h, params) => {
             let self = this
             return h('div', [
@@ -106,14 +115,30 @@ export default {
                 'Button',
                 {
                   props: {
-                    type: 'error',
-                    size: 'small',
-                    disabled: params.row.state === 0
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    'margin-right': '5px'
                   },
                   on: {
                     click: () => {
-                      event.stopPropagation()
-                      self.removeMessage(params.row)
+                      self.lookResource(params.row.path)
+                    }
+                  }
+                },
+                '查看'
+              ),
+              h(
+                'Button',
+                {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      self.removeResource(params.row)
                     }
                   }
                 },
@@ -123,6 +148,11 @@ export default {
           }
         }
       ]
+    }
+  },
+  computed: {
+    resourcePathCurrent() {
+      return service.replace(/\/bm\//, '') + this.resourcePath
     }
   },
   created() {
@@ -147,7 +177,7 @@ export default {
     searchData: function() {
       this._getResource(this.params)
     },
-    removeMessage: async function(req) {
+    removeResource: async function(req) {
       const res = await Resource.deleteResource(req._id)
       if (res.status) {
         this.$Message.success('删除成功')
@@ -155,6 +185,13 @@ export default {
       } else {
         this.$Message.error(res.msg)
       }
+    },
+    lookResource(path) {
+      this.resourcemodal = true
+      this.resourcePath = path
+    },
+    closeModal() {
+      this.resourcemodal = false
     }
   }
 }
@@ -164,5 +201,12 @@ export default {
 .my-label {
   line-height: 32px;
   text-align: center;
+}
+.zvale-resource-modal {
+  text-align: center;
+}
+.zvale-resource-modal img{
+  max-width: 420px;
+  box-shadow:  0 0 5px #ccc;
 }
 </style>

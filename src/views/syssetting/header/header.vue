@@ -28,6 +28,7 @@
 <script>
 import { getHeaderModelList } from '@/api/syssetting'
 export default {
+  name: 'websetting_header',
   data() {
     return {
       headermodelLength: 0,

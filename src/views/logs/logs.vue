@@ -22,7 +22,7 @@
         </Col>
       </Row>
       <br>
-      <Table :loading="loading" border size="small" :columns="columns" highlight-row :data="listData"></Table>
+      <Table :loading="loading" border size="small" :columns="columns" :data="listData"></Table>
       <div style="margin: 5px;padding:5px;overflow: hidden">
         <div style="float: right;">
           <Page :total="total" size="small" show-total show-elevator show-sizer @on-change="pageChangeRender" @on-page-size-change="limitChangeRender"></Page>
@@ -37,6 +37,7 @@ import Log from '@/api/logs'
 import Moment from 'moment'
 
 export default {
+  name:'logs_index',
   data() {
     return {
       loading: true,
