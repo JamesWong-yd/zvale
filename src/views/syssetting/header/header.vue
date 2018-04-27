@@ -69,7 +69,7 @@ export default {
       require(['./components/index.vue'], resolve)
     },
     'header-normal': resolve => {
-      require(['../header/components/normal.vue'], resolve)
+      require(['./components/normal.vue'], resolve)
     }
   }
 }
